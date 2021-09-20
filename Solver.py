@@ -53,4 +53,6 @@ def main():
     data_string = repr(data)
     print(data_string)
     s.close()
-main()
+if __name__ == '__main__'
+    main()
+
