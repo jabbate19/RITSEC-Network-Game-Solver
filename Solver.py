@@ -8,26 +8,15 @@ BUFFER_SIZE=4096
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 def init():
     s.connect((TCP_IP, TCP_PORT))
-    #s.send(MESSAGE)
     data = s.recv(BUFFER_SIZE)
-    #print(repr(data))
     s.send("".encode())
 
 def get_problem():
     data = s.recv(BUFFER_SIZE)
     data_string = repr(data)
     print(data_string)
-    #print(data_string.find("problem"))
-    problem = ''
-    for x in range( data_string.find("problem:")+8, len(data_string) ):
-        char = data_string[x]
-        if char == ' ':
-            break
-        else:
-            problem += char
-    #for x in range( data_string.find("size:")+5, len(data_string)-1 ):
-    #    char = data_string[x]
-    #    items += char
+    problem = data_string[data_string.find("problem:")+8:data_string.find(' ')]
+    print(problem)
     pos1 = data_string.find('\\n')
     pos2 = (data_string.find('\\n',pos1+1))
     items = data_string[pos2:]
@@ -56,12 +45,10 @@ def solve_problem():
 
 def main():
     init()
-    #print(get_problem())
-    #print(solve_problem())
     for x in range(0,100):
         print( x + 1 )
         s.send(str(round(solve_problem())).encode())
-        sleep(0.5)
+        sleep(0.25)
     data = s.recv(BUFFER_SIZE)
     data_string = repr(data)
     print(data_string)
