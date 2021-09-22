@@ -15,11 +15,11 @@ def get_problem():
     data = s.recv(BUFFER_SIZE)
     data_string = repr(data)
     print(data_string)
-    problem = data_string[data_string.find("problem:")+8:data_string.find(' ')]
+    problem_size_space = data_string.find(' ')
+    problem = data_string[data_string.find(":")+1:problem_size_space]
     print(problem)
-    pos1 = data_string.find('\\n')
-    pos2 = (data_string.find('\\n',pos1+1))
-    items = data_string[pos2:]
+    num_start = data_string.find('\\n',problem_size_space)
+    items = data_string[num_start:]
     items = items.split('\\n')
     items.insert(0, problem)
     items.remove('')
